@@ -1,5 +1,9 @@
-import { myVar } from './scipts/app.ts'
+import { Slider } from 'slider';
+
+import { myVar } from './scripts/app.ts'
 import './styles/base.less'
+
+console.log('Slider = ', Slider);
 
 var App = function(apiUrl) {
 

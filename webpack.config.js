@@ -17,23 +17,22 @@ const extractLess = new ExtractTextPlugin({
 });
 
 const config = {
-  context: path.resolve(__dirname, 'src'),
   entry: {
-    app: './app.js'
+    app: path.resolve(__dirname, 'src/app.js')
   },
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    // publicPath: '/'
   },
   devtool: 'inline-source-map',
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: 'vendor-[hash].min.js',
+      filename: 'vendor-[hash].min.js'
     }),
     extractLess,
-    new HtmlWebpackPlugin({inject: 'body', filename: 'index.html', template: 'index.html'}),
+    new HtmlWebpackPlugin({inject: 'body', filename: 'index.html', template: path.resolve(__dirname, 'src/index.html')}),
     new CleanWebpackPlugin(pathsToClean, cleanOptions)
   ],
   module: {
@@ -51,14 +50,12 @@ const config = {
             // attrs: [':data-src']
           }
         }
-      }
-,
+      },
       {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
-            loader: 'file-loader',
-            options: {}
+            loader: 'file-loader'
           }
         ]
       },
@@ -73,10 +70,13 @@ const config = {
           fallback: "style-loader"
         })
       }
-      ]
+    ]
   },
   resolve: {
-    moduleDirectories: [],
+    modules: [
+      path.resolve(__dirname, 'src/scripts/modules'),
+      'node_modules'
+    ],
     extensions: [ '.ts', '.tsx', '.js', 'less', 'css' ]
   }
 };
